@@ -63,6 +63,12 @@ body {
     color: rgb(233,50,117);
 }
 
+.navbar .links-container:active {
+    color: rgb(233,50,117);
+    background-color: white;
+}
+
+
 .container {
     margin: 0 auto;
     max-width: 64rem;    
@@ -84,7 +90,6 @@ body {
      .column.fourth { width: 25%; }
      .column.flow-opposite { float: right; }
 }
-
 
  /* Large screens (1024px) */
  @media (min-width: 1024px) {
