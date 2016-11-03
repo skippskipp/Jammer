@@ -28,6 +28,7 @@ body.landing {
 
 .selling-points {
     position: relative;
+    min-height: 500px;
 }
 
 .point {
