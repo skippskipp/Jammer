@@ -30,6 +30,23 @@ var albumMarconi = {
     ]
 };
 
+//My ALbum
+var albumVeracity = {
+    title: 'Veracious',
+    artist: 'Baz Suufla',
+    label: 'CAD',
+    year: '1999',
+    albumArtUrl: 'assets/images/album_covers/19.png',
+    songs: [
+        { title: 'Electrons', duration: '3:01' },
+        { title: 'Splicing Your Genes', duration: '2:10' },
+        { title: 'We Are Atomic', duration: '3:33' },
+        { title: 'Rapture of Light', duration: '4:19' },
+        { title: 'Molecular Catastrophe', duration: '5:54'},
+    ]
+};
+
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
@@ -42,29 +59,34 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
+var albums = [albumPicasso, albumMarconi, albumVeracity];
+
  var setCurrentAlbum = function(album) {
-     // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
-     // #2
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
      albumImage.setAttribute('src', album.albumArtUrl);
- 
-     // #3
      albumSongList.innerHTML = '';
- 
-     // #4
      for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
+
  
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(albumVeracity);
+     var activeAlbum = 0;
+      albumImage.addEventListener("click", function(event) {
+          setCurrentAlbum(albums[activeAlbum]);
+          activeAlbum++;
+         if (activeAlbum == albums.length) {
+             activeAlbum = 0;
+         }
+     });
  };
