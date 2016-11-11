@@ -84,12 +84,16 @@ var setCurrentAlbum = function(album) {
 //if element's parentClass doesn't match target..go up DOM tree
 //differences:  my original did not account for currentParent.className being null, and I used !== instead of != for comparing parent to target
 var findParentByClassName = function(element, targetClass) {
-    if (element) {
-        var currentParent = element.parentElement;
-        while (currentParent.className != targetClass && currentParent.className !== null) {
+    var currentParent = element.parentElement;
+    if (currentParent.className !== null) {
+        while (currentParent.className != targetClass) {
             currentParent = parent.parentElement;
         }
     return currentParent;
+    } else if (currentParent.className == null) {
+        alert('No parent found');
+    } else if (currentParent.className !== targetClass) {
+        alert('No parent found with that class name');
     }
 };
 
