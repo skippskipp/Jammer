@@ -172,7 +172,7 @@ var albumRefresh = function() {
                  songItem.innerHTML = songItemNumber;
              }
          });
-         
+         console.log('doing lots of stuff');
          songRows[i].addEventListener('click', function(event) {
              // Event handler call
              clickHandler(event.target);
