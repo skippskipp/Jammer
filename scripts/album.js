@@ -84,10 +84,14 @@ var setCurrentAlbum = function(album) {
 //if element's parentClass doesn't match target..go up DOM tree
 //differences:  my original did not account for currentParent.className being null, and I used !== instead of != for comparing parent to target
 var findParentByClassName = function(element, targetClass) {
+    console.log('element', element);
     if (element) {
         var currentParent = element.parentElement;
+        console.log('parent', currentParent);
         while (currentParent.className != targetClass && currentParent.className !== null) {
+            
             currentParent = currentParent.parentElement;
+            console.log('parent2', currentParent);
         }
         return currentParent;
     }
@@ -158,31 +162,29 @@ var currentlyPlayingSong = null;
          }
      });
      songListContainer.addEventListener('mouseover', function(event) {
-        //Only target individual song rows during event delegation
          if (event.target.parentElement.className === 'album-view-song-item') {
-             //Change the content from the number to the play button's HTML
-             event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
-             var songItem = getSongItem(event.target);
-             if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong){
-                 songItem.innerHTML = playButtonTemplate;
+                var songItem = getSongItem(event.target);
+                if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
+                    songItem.innerHTML = playButtonTemplate;
              }
          }
             for (var i = 0; i < songRows.length; i++) {
                 songRows[i].addEventListener('mouseleave', function(event) {
                 var songItem = getSongItem(event.target);
                 var songItemNumber = songItem.getAttribute('data-song-number');
+                    console.log('songnumber', typeof songItemNumber);
+                    console.log('currentSong', typeof currentlyPlayingSong);
                 if (songItemNumber !== currentlyPlayingSong) {
+                    console.log('mouseleave change innerHTML');
                     songItem.innerHTML = songItemNumber;
                     this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
-             }
-         });
-         console.log('doing lots of stuff');
-         songRows[i].addEventListener('click', function(event) {
-             // Event handler call
-             clickHandler(event.target);
-         })
-     }
-     });
+                    }
+                });
+                songRows[i].addEventListener('click', function(event) {
+                clickHandler(event.target);
+                })
+            }
+        });
  };
 
 
