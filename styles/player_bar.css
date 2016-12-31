@@ -36,6 +36,7 @@
     width: 25%;
     text-align: left;
     padding-right: 1rem;
+    user-select: none;
 }
 
 .player-bar .main-controls .previous {
