@@ -63,6 +63,8 @@ var createSongRow = function(songNumber, songName, songLength) {
         
         if (songNumber !== currentlyPlayingSongNumber) {
             songNumberCell.html(playButtonTemplate);
+             } else if (currentSoundFile && currentSoundFile.isPaused()) {
+                 songNumberCell.html(playButtonTemplate);
              }
     };
     
@@ -72,6 +74,9 @@ var createSongRow = function(songNumber, songName, songLength) {
         if (songNumber !== currentlyPlayingSongNumber) {
             songNumberCell.html(songNumber);
             }
+         if (currentSoundFile && currentSoundFile.isPaused()) {
+            songNumberCell.html(songNumber);
+         }
     };
     
     $row.find('.song-item-number').click(clickHandler);
@@ -175,7 +180,22 @@ var previousSong = function() {
     $lastSongNumberCell.html(lastSongNumber);
 };
 
-
+var toggleFromPlayerBar = function() {
+    if (!currentlyPlayingSongNumber) {
+        setSong(1);
+        updatePlayerBarSong();
+    }
+    var songNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    if (currentSoundFile.isPaused()) {
+        songNumberCell.html(pauseButtonTemplate);
+        $('.main-controls .play-pause').html(playerBarPauseButton);
+        currentSoundFile.play();
+    } else {
+        songNumberCell.html(playButtonTemplate);
+        $('.main-controls .play-pause').html(playerBarPlayButton);
+        currentSoundFile.pause();
+    }
+};
 
 
 var updatePlayerBarSong = function() {
@@ -200,6 +220,7 @@ var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
 var currentVolume = 80;
+var $playPauseButton = $('.main-controls .play-pause');
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
@@ -207,6 +228,7 @@ $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPauseButton.click(toggleFromPlayerBar);
     var activeAlbum = 1;
     albumImage.addEventListener("click", function(event) {
         setCurrentAlbum(albums[activeAlbum]);
